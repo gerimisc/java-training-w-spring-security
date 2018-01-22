@@ -18,9 +18,4 @@ public class IndexController {
 		return "index";
 	}
 	
-//	@RequestMapping(value = "/xss/reflected", method = RequestMethod.GET)
-//	public String reflectedXSS(ModelMap model) {
-//		return "reflected";
-//	}
-	
 }

@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2>Reflected XSS (GET)</h2>
-<form action="/xss/reflected" method="get">
+<h2>Reflected XSS (POST)</h2>
+<form action="/xss/reflected-2" method="post">
 Please enter your name: <input name="name" type="text"/>
 <input type="submit">
 </form>
