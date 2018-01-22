@@ -11,5 +11,7 @@
 Please enter your name: <input name="name" type="text"/>
 <input type="submit">
 </form>
+Welcome, ${reflected} <br>
+Enter your name so you can be properly greeted! :) 
 </body>
 </html>

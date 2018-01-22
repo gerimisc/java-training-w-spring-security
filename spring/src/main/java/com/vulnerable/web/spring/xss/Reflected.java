@@ -1,8 +1,5 @@
 package com.vulnerable.web.spring.xss;
 
-import org.springframework.stereotype.Controller;
-
-@Controller
 public class Reflected {
 	private String name;
 	
