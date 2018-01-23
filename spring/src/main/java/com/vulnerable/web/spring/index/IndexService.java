@@ -15,8 +15,10 @@ public class IndexService {
 		indexes.add(new Index("<a href=/xss/reflected>Reflected XSS (GET)</a>", "<a href=/xss/reflected>Spring module </a>"));
 		indexes.add(new Index("<a href=/xss/reflected-2>Reflected XSS (POST)</a>", "<a href=/xss/reflected>Spring module </a>"));
 		indexes.add(new Index("<a href=/xss/stored>Stored XSS </a>", "<a href=/xss/reflected>Spring module.. </a>"));
-
-		
+		indexes.add(new Index("<a href=/xss/dom>DOM XSS </a>", "<a href=/xss/reflected>Spring module.. </a>"));
+		indexes.add(new Index("<a href=/index>Unrestricted File Upload</a>", "<a href=/xss/reflected>Spring module.. </a>"));
+		indexes.add(new Index("<a href=/index>Directory Traversal</a>", "<a href=/xss/reflected>Spring module.. </a>"));
+		indexes.add(new Index("<a href=/index>SQL Injection</a>", "<a href=/xss/reflected>Spring module.. </a>"));
 	}
 	
 	public List<Index> getURLs() {

@@ -31,4 +31,9 @@ public class ReflectedController {
 		model.put("reflected", name);
 		return "reflected-2";
 	}
+	
+	@RequestMapping(value = "/dom", method = RequestMethod.GET)
+	public String domXSS() {;
+		return "dom-xss";
+	}
 }
