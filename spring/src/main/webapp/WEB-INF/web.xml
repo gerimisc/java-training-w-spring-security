@@ -18,6 +18,7 @@
 	            <param-name>contextConfigLocation</param-name>
 	            <param-value>/WEB-INF/context-servlet.xml</param-value>
 	        </init-param>
+	        
 	        <load-on-startup>1</load-on-startup>
 	 </servlet>
 	
@@ -26,8 +27,9 @@
 	     	<url-pattern>/</url-pattern>
 	 </servlet-mapping>
 	 
-	 <context-param>
+	<context-param>
 		<param-name>defaultHtmlEscape</param-name>
-		<param-value>true</param-value>
+		<param-value>false</param-value>
 	</context-param>
+	
 </web-app>

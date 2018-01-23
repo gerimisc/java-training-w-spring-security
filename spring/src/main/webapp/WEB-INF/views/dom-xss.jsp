@@ -8,11 +8,10 @@
 </head>
 <body>
 <h2>DOM XSS</h2>
-
-The page is vulnerable to DOM XSS (Client Side)<br/><br/>
-
+You are here: <span id="location"></span>
 <script>
-    document.write("<b>The Current URL</b> : " + document.baseURI);
+    var loc = document.location.href;
+    document.getElementById("location").innerHTML = loc;
 </script>
 </body>
 </html>

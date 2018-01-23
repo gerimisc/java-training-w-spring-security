@@ -3,6 +3,9 @@ package com.vulnerable.web.spring.xss;
 public class Reflected {
 	private String name;
 	
+	public Reflected() {
+		this.name = "Guest";
+	}
 	public Reflected(String name) {
 		this.name = name;
 	}
