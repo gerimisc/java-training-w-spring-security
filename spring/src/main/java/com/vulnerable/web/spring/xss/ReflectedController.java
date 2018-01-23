@@ -36,4 +36,10 @@ public class ReflectedController {
 	public String domXSS() {;
 		return "dom-xss";
 	}
+	
+	@RequestMapping(value = "/reflected-soln", method = RequestMethod.GET)
+	public String reflectedXSSSoln(ModelMap model, @RequestParam(value = "name", defaultValue = "Guest!", required=false) final String name) {
+		model.put("reflected", name);
+		return "reflected-soln";
+	}
 }
