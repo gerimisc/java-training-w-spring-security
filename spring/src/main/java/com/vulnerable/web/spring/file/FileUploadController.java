@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,14 +30,11 @@ public class FileUploadController {
 	}
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public @ResponseBody
-	String uploadFileHandler(@RequestParam("name") String name,
-			@RequestParam("file") MultipartFile file) {
-
+	public String uploadFileHandler(ModelMap model, @RequestParam("file") MultipartFile file) {
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
-
+				String name = file.getOriginalFilename();
 				// Creating the directory to store file
 				String rootPath = System.getProperty("catalina.home");
 				File dir = new File(rootPath + File.separator + "tmpFiles");
@@ -53,13 +51,14 @@ public class FileUploadController {
 
 //				logger.info("Server File Location="
 //						+ serverFile.getAbsolutePath());
-
-				return "You successfully uploaded file=" + name;
+				String path = "File has been uploaded to <b>" + serverFile;
+				model.addAttribute("path", path);
+				return "upload";
 			} catch (Exception e) {
-				return "You failed to upload " + name + " => " + e.getMessage();
+				return "You failed to upload " + "" + " => " + e.getMessage();
 			}
 		} else {
-			return "You failed to upload " + name
+			return "You failed to upload " + ""
 					+ " because the file was empty.";
 		}
 	}
