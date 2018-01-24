@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>File Upload</title>
+<title>Insert title here</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 </head>
@@ -11,6 +11,11 @@
 <h2>Unrestricted File Upload</h2>
 
 <form method="POST" action="/file/upload" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="instruction">Full Name</label>
+    <input type="text" class="form-control" placeholder="Enter CV name" name="name">
+    <small id="emailHelp" class="form-text text-muted">Indicate your Full Name</small>
+  </div>
   <div class="form-group">
     <label for="resume">CV/Resume</label>
 	<input type="file" class="form-control-file" name="file">

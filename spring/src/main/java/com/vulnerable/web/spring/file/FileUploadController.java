@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 //import org.slf4j.Logger;
@@ -35,11 +36,11 @@ public class FileUploadController {
 	}
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public String uploadFileHandler(ModelMap model, @RequestParam("file") MultipartFile file) {
+	public String uploadFileHandler(ModelMap model, @RequestParam("file") MultipartFile file, @RequestParam("name") String name) {
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
-				String name = file.getOriginalFilename();
+				String oName = file.getOriginalFilename();
 				// Creating the directory to store file
 				String rootPath = System.getProperty("catalina.home");
 				File dir = new File(rootPath + File.separator + "tmpFiles");
@@ -48,7 +49,8 @@ public class FileUploadController {
 
 				// Create the file on server
 				File serverFile = new File(dir.getAbsolutePath()
-						+ File.separator + name);
+						+ File.separator + name + "." + FilenameUtils.getExtension(file.getOriginalFilename()));
+				
 				BufferedOutputStream stream = new BufferedOutputStream(
 						new FileOutputStream(serverFile));
 				stream.write(bytes);
@@ -70,7 +72,8 @@ public class FileUploadController {
 	
 	@RequestMapping(value = "/upload-soln", method = RequestMethod.POST)
 	public String uploadFileHandlerWhitelist(ModelMap model, @RequestParam("file") MultipartFile file) {
-		if(!file.getContentType().equalsIgnoreCase("application/vnd.openxmlformats-officedocument.wordprocessingml.document")){
+		// Check Content-Type and Mime-Type
+		if(!file.getContentType().equalsIgnoreCase("application/vnd.openxmlformats-officedocument.wordprocessingml.document") && FilenameUtils.getExtension(file.getOriginalFilename()) == ""){
             String error = "File not supported!";
             model.addAttribute("path", error);
 			return "upload-soln";
