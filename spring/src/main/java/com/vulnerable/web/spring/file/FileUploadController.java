@@ -72,16 +72,25 @@ public class FileUploadController {
 	
 	@RequestMapping(value = "/upload-soln", method = RequestMethod.POST)
 	public String uploadFileHandlerWhitelist(ModelMap model, @RequestParam("file") MultipartFile file) {
-		// Check Content-Type and Mime-Type
-		if(!file.getContentType().equalsIgnoreCase("application/vnd.openxmlformats-officedocument.wordprocessingml.document") && FilenameUtils.getExtension(file.getOriginalFilename()) == ""){
+		String ext = FilenameUtils.getExtension(file.getOriginalFilename());
+		String mime = file.getContentType();
+		
+		// Check Content-Type / Mime-Type and Extension
+		if(!mime.equalsIgnoreCase("application/vnd.openxmlformats-officedocument.wordprocessingml.document") || !"docx".equals(ext)){
             String error = "File not supported!";
             model.addAttribute("path", error);
-			return "upload-soln";
+            System.out.println(mime);
+            System.out.println(ext);
+            System.out.println("false mime or ext. ");
+            return "upload-soln";
         }
+        
+	
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
 				String name = file.getOriginalFilename();
+
 				// Creating the directory to store file
 				String rootPath = System.getProperty("catalina.home");
 				File dir = new File(rootPath + File.separator + "tmpFiles");
@@ -98,7 +107,7 @@ public class FileUploadController {
 
 //				logger.info("Server File Location="
 //						+ serverFile.getAbsolutePath());
-				String path = "File has been uploaded to <b>" + serverFile;
+				String path = "extension is " +ext + " File has been uploaded to <b>" + serverFile;
 				model.addAttribute("path", path);
 				return "upload-soln";
 			} catch (Exception e) {
