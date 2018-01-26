@@ -40,8 +40,8 @@ public class FileUploadController {
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
-				String oName = file.getOriginalFilename();
-				// Creating the directory to store file
+
+				// Creating the directory to store the uploaded files
 				String rootPath = System.getProperty("catalina.home");
 				File dir = new File(rootPath + File.separator + "tmpFiles");
 				if (!dir.exists())
@@ -56,8 +56,6 @@ public class FileUploadController {
 				stream.write(bytes);
 				stream.close();
 
-//				logger.info("Server File Location="
-//						+ serverFile.getAbsolutePath());
 				String path = "File has been uploaded to <b>" + serverFile;
 				model.addAttribute("path", path);
 				return "upload";
@@ -65,7 +63,7 @@ public class FileUploadController {
 				return "You failed to upload " + "" + " => " + e.getMessage();
 			}
 		} else {
-			return "You failed to upload " + ""
+			return "You failed to upload " + name
 					+ " because the file was empty.";
 		}
 	}
@@ -74,24 +72,19 @@ public class FileUploadController {
 	public String uploadFileHandlerWhitelist(ModelMap model, @RequestParam("file") MultipartFile file) {
 		String ext = FilenameUtils.getExtension(file.getOriginalFilename());
 		String mime = file.getContentType();
-		
-		// Check Content-Type / Mime-Type and Extension
-		if(!mime.equalsIgnoreCase("application/vnd.openxmlformats-officedocument.wordprocessingml.document") || !"docx".equals(ext)){
-            String error = "File not supported!";
-            model.addAttribute("path", error);
-            System.out.println(mime);
-            System.out.println(ext);
-            System.out.println("false mime or ext. ");
-            return "upload-soln";
-        }
-        
 	
 		if (!file.isEmpty()) {
+			// Check Content-Type / Mime-Type and Extension
+			if(!mime.equalsIgnoreCase("application/vnd.openxmlformats-officedocument.wordprocessingml.document") || !"docx".equals(ext)){
+	            String error = "File not supported!";
+	            model.addAttribute("path", error);
+	            return "upload-soln";
+	        }
 			try {
 				byte[] bytes = file.getBytes();
 				String name = file.getOriginalFilename();
 
-				// Creating the directory to store file
+				// Creating the directory to store uploaded file
 				String rootPath = System.getProperty("catalina.home");
 				File dir = new File(rootPath + File.separator + "tmpFiles");
 				if (!dir.exists())
@@ -105,17 +98,18 @@ public class FileUploadController {
 				stream.write(bytes);
 				stream.close();
 
-//				logger.info("Server File Location="
-//						+ serverFile.getAbsolutePath());
-				String path = "extension is " +ext + " File has been uploaded to <b>" + serverFile;
+				String path = "File has been uploaded to <b>" + serverFile;
 				model.addAttribute("path", path);
 				return "upload-soln";
 			} catch (Exception e) {
-				return "You failed to upload " + "" + " => " + e.getMessage();
+				String errMsg = "You failed to upload " + "" + " => " + e.getMessage();
+	            model.addAttribute("path", errMsg);
+				return "upload-soln";
 			}
 		} else {
-			return "You failed to upload " + ""
-					+ " because the file was empty.";
+			String emptyFile = "Empty file!";
+            model.addAttribute("path", emptyFile);
+			return "upload-soln";
 		}
 	}
 }
